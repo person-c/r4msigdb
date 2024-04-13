@@ -1,6 +1,3 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -9,7 +6,7 @@ output: github_document
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of r4msigdb is to ...
+The goal of r4msigdb is to query for the MSigDB.
 
 ## Installation
 
@@ -17,20 +14,23 @@ You can install the development version of r4msigdb like so:
 
 ``` r
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# devtools::install('snowGlint/r4msigdb)
 ```
 
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
 
-```r
+``` r
 #library(r4msigdb)
 ## basic example code
+# query(pathway = 'FERROPT)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+What is special about using `README.Rmd` instead of just `README.md`?
+You can include R chunks like so:
 
-```r
+``` r
 summary(cars)
 #>      speed           dist       
 #>  Min.   : 4.0   Min.   :  2.00  
@@ -41,13 +41,12 @@ summary(cars)
 #>  Max.   :25.0   Max.   :120.00
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+You’ll still need to render `README.Rmd` regularly, to keep `README.md`
+up-to-date. `devtools::build_readme()` is handy for this.
 
 You can also embed plots, for example:
 
-<div class="figure">
-<img src="man/figures/README-pressure-1.png" alt="plot of chunk pressure" width="100%" />
-<p class="caption">plot of chunk pressure</p>
-</div>
+<img src="man/figures/README-pressure-1.png" width="100%" />
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+In that case, don’t forget to commit and push the resulting figure
+files, so they display on GitHub and CRAN.

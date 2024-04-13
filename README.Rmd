@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of r4msigdb is to ...
+The goal of r4msigdb is to query for the MSigDB.
 
 ## Installation
 
@@ -26,6 +26,7 @@ You can install the development version of r4msigdb like so:
 
 ``` r
 # FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+# devtools::install('snowGlint/r4msigdb)
 ```
 
 ## Example
@@ -35,6 +36,7 @@ This is a basic example which shows you how to solve a common problem:
 ```{r example}
 #library(r4msigdb)
 ## basic example code
+# query(pathway = 'FERROPT)
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:

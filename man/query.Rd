@@ -7,7 +7,7 @@
 query(species = NULL, pathway = NULL, symbols = NULL, .unlist = FALSE)
 }
 \arguments{
-\item{species}{species(human or mouse).}
+\item{species}{species(Hs or Mm).}
 
 \item{pathway}{regex expression to match possible pathsways.}
 
@@ -16,5 +16,5 @@ query(species = NULL, pathway = NULL, symbols = NULL, .unlist = FALSE)
 \item{.unlist}{whether to unlist the symbols column.}
 }
 \description{
-Query for MsigDB.
+You can's search pathways and symbols simultaneously which has yet not be added.
 }

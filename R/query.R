@@ -12,25 +12,28 @@ setnames <- function(x, name) {
 }
 
 #' Query for MsigDB.
-#' @param species species(human or mouse).
+#' @param species species(Hs or Mm).
 #' @param pathway regex expression to match possible pathsways.
 #' @param symbols character vector of gene symbols to match possible pathsways
 #' @param .unlist whether to unlist the symbols column.
+#' @description You can's search pathways and symbols simultaneously which has yet not be added.
 #' @import data.table
 #' @export
 query <- function(
     species = NULL, pathway = NULL, symbols = NULL,
     .unlist = FALSE) {
-  temp <- data.table::copy(mouse)
-  if (length(as.list(match.call())) == 1L) {
-    return(temp)
+  stopifnot(!is.null(species))
+  match.arg(species, c("Hs", "Mm"))
+  rr <- if (species == "Hs") human else mouse
+  if (all(sapply(c(pathway, symbols), is.null))) {
+    return(rr)
   }
   if (!is.null(pathway)) {
-    rr <- temp[standard_name %like% pathway]
+    rr <- rr[standard_name %like% pathway]
   }
 
   if (!is.null(symbols)) {
-    rr <- temp[sapply(symbol, function(s) any(symbols %chin% s))]
+    rr <- rr[sapply(symbol, function(s) any(symbols %chin% s))]
   }
 
   if (.unlist) {
