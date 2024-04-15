@@ -17,7 +17,6 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml)
-
 [![test-coverage](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
@@ -37,18 +36,18 @@ This is a basic example which shows you how to query for the MSigDB:
 
 ```{r example}
 library(r4msigdb)
-query(species = 'Hs', pathway = 'FERROPTOSIS')
-query(species = 'Hs', symbols = c('PTPRC', 'TP53'))
+query(species = 'Hs', pathway = 'FERROPTOSIS') 
+query(species = 'Hs', symbols = c('PTPRC', 'TP53')) |> head()
 ```
 
 You can unlist the symbol column using `.unlist = TRUE`
 
 ```{r}
-query(species = 'Hs', .unlist = TRUE)
+query(species = 'Hs', .unlist = TRUE) |> head()
 ```
 
 You could query for the MSigDB by your own way if you are familiar with `data.table`
 
 ```{r}
-query(species = 'Hs')[.('H'), by = .(collection_name)]
+query(species = 'Hs')[.('H'), by = .(collection_name)] |> head()
 ```

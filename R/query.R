@@ -25,7 +25,14 @@ query <- function(
   match.arg(species)
   rr <- if (species == "Hs") human else mouse
   if (all(sapply(c(pathway, symbols), is.null))) {
-    return(rr)
+    if (.unlist) {
+      rr <- rr[, setnames(list(unlist(symbol)), "symbol"),
+        by = list(collection_name, standard_name)
+      ]
+      return(rr)
+    } else {
+      return(rr)
+    }
   }
   if (!is.null(pathway)) {
     rr <- rr[standard_name %like% pathway]
