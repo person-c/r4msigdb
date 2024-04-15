@@ -16,14 +16,13 @@ setnames <- function(x, name) {
 #' @param pathway regex expression to match possible pathsways.
 #' @param symbols character vector of gene symbols to match possible pathsways
 #' @param .unlist whether to unlist the symbols column.
-#' @description You can's search pathways and symbols simultaneously which has yet not be added.
 #' @import data.table
 #' @export
 query <- function(
-    species = NULL, pathway = NULL, symbols = NULL,
+    species = c("Hs", "Mm"), pathway = NULL, symbols = NULL,
     .unlist = FALSE) {
   stopifnot(!is.null(species))
-  match.arg(species, c("Hs", "Mm"))
+  match.arg(species)
   rr <- if (species == "Hs") human else mouse
   if (all(sapply(c(pathway, symbols), is.null))) {
     return(rr)

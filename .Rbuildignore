@@ -6,3 +6,6 @@
 ^README\.Rmd$
 ^\.github$
 .zip$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

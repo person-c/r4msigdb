@@ -16,6 +16,9 @@ knitr::opts_chunk$set(
 # r4msigdb
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml)
+
+[![test-coverage](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
 The goal of r4msigdb is to query for the MSigDB.
@@ -24,33 +27,28 @@ The goal of r4msigdb is to query for the MSigDB.
 
 You can install the development version of r4msigdb like so:
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
-# devtools::install('snowGlint/r4msigdb)
+```{r, eval=FALSE}
+devtools::install('snowGlint/r4msigdb')
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to query for the MSigDB:
 
 ```{r example}
-#library(r4msigdb)
-## basic example code
-# query(pathway = 'FERROPT)
+library(r4msigdb)
+query(species = 'Hs', pathway = 'FERROPTOSIS')
+query(species = 'Hs', symbols = c('PTPRC', 'TP53'))
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+You can unlist the symbol column using `.unlist = TRUE`
 
-```{r cars}
-summary(cars)
+```{r}
+query(species = 'Hs', .unlist = TRUE)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
+You could query for the MSigDB by your own way if you are familiar with `data.table`
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r}
+query(species = 'Hs')[.('H'), by = .(collection_name)]
 ```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.

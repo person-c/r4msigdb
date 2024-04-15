@@ -4,7 +4,7 @@
 \alias{query}
 \title{Query for MsigDB.}
 \usage{
-query(species = NULL, pathway = NULL, symbols = NULL, .unlist = FALSE)
+query(species = c("Hs", "Mm"), pathway = NULL, symbols = NULL, .unlist = FALSE)
 }
 \arguments{
 \item{species}{species(Hs or Mm).}
@@ -16,5 +16,5 @@ query(species = NULL, pathway = NULL, symbols = NULL, .unlist = FALSE)
 \item{.unlist}{whether to unlist the symbols column.}
 }
 \description{
-You can's search pathways and symbols simultaneously which has yet not be added.
+Query for MsigDB.
 }
