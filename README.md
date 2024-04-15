@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# r4msigdb
+## r4msigdb
 
 <!-- badges: start -->
 
@@ -90,3 +90,33 @@ query(species = 'Hs')[.('H'), by = .(collection_name)] |> head()
 #> 5:          CD99,SKAP2,ITGA3,PKD1,CLDN11,VCL,...
 #> 6: ADIPOR2,BRCA1,DCBLD2,CROCC,IL2RB,ATP6V0A4,...
 ```
+
+## GSEA
+
+``` r
+library(fgsea)
+library(data.table)
+#> Warning: package 'data.table' was built under R version 4.3.3
+palette <- c("#440154FF", "#31688EFF", "#26828EFF", "#6DCD59FF", "#FDE725FF")
+
+data(exampleRanks)
+pathway <-  query(species = 'Hs', pathway = 'OPTOSIS', .unlist = TRUE)
+pathway <- pathway[, .(standard_name, symbol)]
+# substitute names with random symbols
+set.seed(2024)
+names(exampleRanks) <- query(species = 'Hs', .unlist = TRUE)[, sample(unique(symbol), length(exampleRanks))]
+
+gseaR <- clusterProfiler::GSEA(rev(exampleRanks),
+  TERM2GENE = pathway, pvalueCutoff = 1, by = "fgsea", eps = 0
+)
+sortedgsea <- as.data.table(gseaR@result)[order(pvalue)]
+
+enrichplot::gseaplot2(gseaR, sortedgsea[["ID"]][1:5],
+  base_size = 10,
+  color = palette,
+  rel_heights = c(1.5, 0.3, 0.5),
+  pvalue_table = FALSE
+)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />

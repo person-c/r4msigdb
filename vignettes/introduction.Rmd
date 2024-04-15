@@ -1,36 +1,24 @@
 ---
-output: github_document
+title: "introduction"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  comment = "#>"
 )
 ```
 
-## r4msigdb
-
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml)
-[![test-coverage](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml)
-<!-- badges: end -->
-
-The goal of r4msigdb is to query for the MSigDB.
-
-## Installation
-
-You can install the development version of r4msigdb like so:
-
-```{r, eval=FALSE}
-devtools::install('snowGlint/r4msigdb')
+```{r setup}
+library(r4msigdb)
 ```
 
-## Example
+## Basic usage
 
 This is a basic example which shows you how to query for the MSigDB:
 
@@ -54,7 +42,7 @@ query(species = 'Hs')[.('H'), by = .(collection_name)] |> head()
 
 ## GSEA
 
-```{r, message=FALSE}
+```{r message=FALSE}
 library(fgsea)
 library(data.table)
 palette <- c("#440154FF", "#31688EFF", "#26828EFF", "#6DCD59FF", "#FDE725FF")

@@ -14,3 +14,7 @@ Depends:
 Imports: 
     data.table,
 URL: https://snowglint.github.io/r4msigdb/
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
