@@ -16,7 +16,7 @@ designed to facilitate more convenient and efficient querying of
 pathways either based on specific genes or using regular expression
 patterns to match pathway names.
 
-# Installation
+## Installation
 
 You can install the development version of r4msigdb like so:
 
@@ -24,9 +24,9 @@ You can install the development version of r4msigdb like so:
 devtools::install('snowGlint/r4msigdb')
 ```
 
-# Querying Pathways
+## Querying Pathways
 
-## Search for Pathways Related to a Specific Topic
+### Search for Pathways Related to a Specific Topic
 
 To retrieve pathways related to a specific topic (e.g., cell programmed
 death):
@@ -56,7 +56,7 @@ query(species = 'Hs', pathway = 'OPTOSIS') |> head()
 This will return a list of pathways associated with `OPTOSIS` and the
 genes involved in each pathway.
 
-## Search for Pathways Related to Specific Genes
+### Search for Pathways Related to Specific Genes
 
 If you want to find pathways related to specific genes (e.g., PTPRC and
 TP53):
@@ -84,7 +84,7 @@ query(species = 'Hs', symbols = c('PTPRC', 'TP53')) |> head()
 
 This will provide pathways where the specified genes are involved.
 
-## Custom Query
+### Custom Query
 
 Advanced users familiar with data.table can perform custom queries. For
 example, to retrieve all pathways `collection_name == 'H'`:
@@ -126,7 +126,7 @@ query(species = 'Hs', .unlist = TRUE) |> head()
 #> 6:              C1            MT MT-ATP6
 ```
 
-# GSEA
+## GSEA
 
 ``` r
 library(fgsea)
