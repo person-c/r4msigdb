@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## r4msigdb
+# r4msigdb
 
 <!-- badges: start -->
 
@@ -9,9 +9,14 @@
 [![test-coverage](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
-The goal of r4msigdb is to query for the MSigDB.
+[MSigDB](https://www.gsea-msigdb.org/gsea/msigdb/) is a widely used gene
+set database in bio-research. However, navigating and querying pathways
+of interest on its website can be challenging. This R package is
+designed to facilitate more convenient and efficient querying of
+pathways either based on specific genes or using regular expression
+patterns to match pathway names.
 
-## Installation
+# Installation
 
 You can install the development version of r4msigdb like so:
 
@@ -19,18 +24,44 @@ You can install the development version of r4msigdb like so:
 devtools::install('snowGlint/r4msigdb')
 ```
 
-## Example
+# Querying Pathways
 
-This is a basic example which shows you how to query for the MSigDB:
+## Search for Pathways Related to a Specific Topic
+
+To retrieve pathways related to a specific topic (e.g., cell programmed
+death):
 
 ``` r
 library(r4msigdb)
-query(species = 'Hs', pathway = 'FERROPTOSIS') 
+query(species = 'Hs', pathway = 'OPTOSIS') |> head()
 #> Key: <collection_name, standard_name>
-#>       collection_name    standard_name                             symbol
-#>                <char>           <char>                             <list>
-#> 1: C2:CP:WIKIPATHWAYS   WP_FERROPTOSIS   GCLC,GCLM,CP,ATG5,ACSL4,TFRC,...
-#> 2:           C5:GO:BP GOBP_FERROPTOSIS SLC39A7,SLC7A11,TMEM164,GPX4,AIFM2
+#>    collection_name                              standard_name
+#>             <char>                                     <char>
+#> 1:          C2:CGP                           ALCALA_APOPTOSIS
+#> 2:          C2:CGP           BROCKE_APOPTOSIS_REVERSED_BY_IL6
+#> 3:          C2:CGP       CONCANNON_APOPTOSIS_BY_EPOXOMICIN_DN
+#> 4:          C2:CGP       CONCANNON_APOPTOSIS_BY_EPOXOMICIN_UP
+#> 5:          C2:CGP DEBIASI_APOPTOSIS_BY_REOVIRUS_INFECTION_DN
+#> 6:          C2:CGP DEBIASI_APOPTOSIS_BY_REOVIRUS_INFECTION_UP
+#>                                          symbol
+#>                                          <list>
+#> 1:         HCCS,MATK,FAS,CYFIP2,ELOVL1,PFKP,...
+#> 2:      DPM1,RALA,PHTF2,ADIPOR2,CD44,SH2D2A,...
+#> 3: ICA1,ETV1,TRAPPC6A,DNASE1L1,TMSB10,HDAC9,...
+#> 4:          TAC1,IFRD1,TSPAN9,GCLM,FAS,CD44,...
+#> 5:      LASP1,BLTP2,METTL13,CD9,NISCH,BRCA1,...
+#> 6:           AK2,CDC27,ACSM3,ZFX,TAC1,IFRD1,...
+```
+
+This will return a list of pathways associated with `OPTOSIS` and the
+genes involved in each pathway.
+
+## Search for Pathways Related to Specific Genes
+
+If you want to find pathways related to specific genes (e.g., PTPRC and
+TP53):
+
+``` r
 query(species = 'Hs', symbols = c('PTPRC', 'TP53')) |> head()
 #> Key: <collection_name, standard_name>
 #>    collection_name                                   standard_name
@@ -51,27 +82,15 @@ query(species = 'Hs', symbols = c('PTPRC', 'TP53')) |> head()
 #> 6:        DPM1,GCLC,M6PR,RECQL,GCFC2,PDK2,...
 ```
 
-You can unlist the symbol column using `.unlist = TRUE`
+This will provide pathways where the specified genes are involved.
+
+## Custom Query
+
+Advanced users familiar with data.table can perform custom queries. For
+example, to retrieve all pathways `collection_name == 'H'`:
 
 ``` r
-query(species = 'Hs', .unlist = TRUE) |> head()
-#> Key: <collection_name, standard_name>
-#>    collection_name standard_name  symbol
-#>             <char>        <char>  <char>
-#> 1:              C1            MT  MT-CO2
-#> 2:              C1            MT  MT-ND2
-#> 3:              C1            MT  MT-CO1
-#> 4:              C1            MT  MT-ND3
-#> 5:              C1            MT  MT-ND4
-#> 6:              C1            MT MT-ATP6
-```
-
-You could query for the MSigDB by your own way if you are familiar with
-`data.table`
-
-``` r
-query(species = 'Hs')[.('H'), by = .(collection_name)] |> head()
-#> Warning: Ignoring by/keyby because 'j' is not supplied
+query(species = 'Hs')[.('H')] |> head()
 #> Key: <collection_name, standard_name>
 #>    collection_name                standard_name
 #>             <char>                       <char>
@@ -91,12 +110,27 @@ query(species = 'Hs')[.('H'), by = .(collection_name)] |> head()
 #> 6: ADIPOR2,BRCA1,DCBLD2,CROCC,IL2RB,ATP6V0A4,...
 ```
 
-## GSEA
+You can also use `.unlist = TRUE` to unlist the symbols column in any of
+the above query methods.
+
+``` r
+query(species = 'Hs', .unlist = TRUE) |> head()
+#> Key: <collection_name, standard_name>
+#>    collection_name standard_name  symbol
+#>             <char>        <char>  <char>
+#> 1:              C1            MT  MT-CO2
+#> 2:              C1            MT  MT-ND2
+#> 3:              C1            MT  MT-CO1
+#> 4:              C1            MT  MT-ND3
+#> 5:              C1            MT  MT-ND4
+#> 6:              C1            MT MT-ATP6
+```
+
+# GSEA
 
 ``` r
 library(fgsea)
 library(data.table)
-#> Warning: package 'data.table' was built under R version 4.3.3
 palette <- c("#440154FF", "#31688EFF", "#26828EFF", "#6DCD59FF", "#FDE725FF")
 
 data(exampleRanks)
@@ -118,5 +152,3 @@ enrichplot::gseaplot2(gseaR, sortedgsea[["ID"]][1:5],
   pvalue_table = FALSE
 )
 ```
-
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />

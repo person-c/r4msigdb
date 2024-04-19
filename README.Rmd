@@ -13,16 +13,16 @@ knitr::opts_chunk$set(
 )
 ```
 
-## r4msigdb
+# r4msigdb
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/snowGlint/r4msigdb/actions/workflows/test-coverage.yaml)
 <!-- badges: end -->
 
-The goal of r4msigdb is to query for the MSigDB.
+[MSigDB](https://www.gsea-msigdb.org/gsea/msigdb/) is a widely used gene set database in bio-research. However, navigating and querying pathways of interest on its website can be challenging. This R package is designed to facilitate more convenient and efficient querying of pathways either based on specific genes or using regular expression patterns to match pathway names.
 
-## Installation
+# Installation
 
 You can install the development version of r4msigdb like so:
 
@@ -30,31 +30,46 @@ You can install the development version of r4msigdb like so:
 devtools::install('snowGlint/r4msigdb')
 ```
 
-## Example
+# Querying Pathways
 
-This is a basic example which shows you how to query for the MSigDB:
+## Search for Pathways Related to a Specific Topic
 
-```{r example}
+To retrieve pathways related to a specific topic (e.g., cell programmed death):
+
+```{r example1}
 library(r4msigdb)
-query(species = 'Hs', pathway = 'FERROPTOSIS') 
+query(species = 'Hs', pathway = 'OPTOSIS') |> head()
+```
+
+This will return a list of pathways associated with `OPTOSIS` and the genes involved in each pathway.
+
+## Search for Pathways Related to Specific Genes
+
+If you want to find pathways related to specific genes (e.g., PTPRC and TP53):
+
+```{r example2}
 query(species = 'Hs', symbols = c('PTPRC', 'TP53')) |> head()
 ```
 
-You can unlist the symbol column using `.unlist = TRUE`
+This will provide pathways where the specified genes are involved.
+
+## Custom Query
+
+Advanced users familiar with data.table can perform custom queries. For example, to retrieve all pathways `collection_name == 'H'`:
+
+```{r}
+query(species = 'Hs')[.('H')] |> head()
+```
+
+You can also use `.unlist = TRUE` to unlist the symbols column in any of the above query methods.
 
 ```{r}
 query(species = 'Hs', .unlist = TRUE) |> head()
 ```
 
-You could query for the MSigDB by your own way if you are familiar with `data.table`
+# GSEA
 
-```{r}
-query(species = 'Hs')[.('H'), by = .(collection_name)] |> head()
-```
-
-## GSEA
-
-```{r, message=FALSE}
+```{r, eval=FALSE}
 library(fgsea)
 library(data.table)
 palette <- c("#440154FF", "#31688EFF", "#26828EFF", "#6DCD59FF", "#FDE725FF")
