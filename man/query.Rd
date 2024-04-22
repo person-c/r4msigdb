@@ -4,7 +4,13 @@
 \alias{query}
 \title{Query for MsigDB.}
 \usage{
-query(species = c("Hs", "Mm"), pathway = NULL, symbols = NULL, .unlist = FALSE)
+query(
+  species = c("Hs", "Mm"),
+  pathway = NULL,
+  symbols = NULL,
+  .unlist = FALSE,
+  all = FALSE
+)
 }
 \arguments{
 \item{species}{species(Hs or Mm).}
@@ -14,6 +20,8 @@ query(species = c("Hs", "Mm"), pathway = NULL, symbols = NULL, .unlist = FALSE)
 \item{symbols}{character vector of gene symbols to match possible pathsways}
 
 \item{.unlist}{whether to unlist the symbols column.}
+
+\item{all}{should the pathway contain all symbols or just any one of the symbols(default is \code{FALSE}).}
 }
 \description{
 Query for MsigDB.

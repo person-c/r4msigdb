@@ -1,5 +1,5 @@
 Package: r4msigdb
-Title: What the Package Does (One Line, Title Case)
+Title: Query the MSigDB Conveniently.
 Version: 0.0.0.9000
 Authors@R: 
     person("Wei", "Cui", , "m2c.w@outlook.com", role = c("aut", "cre"),
