@@ -16,7 +16,7 @@ setnames <- function(x, name) {
 #' @param pathway regex expression to match possible pathsways.
 #' @param symbols character vector of gene symbols to match possible pathsways
 #' @param .unlist whether to unlist the symbols column.
-#' @param all should the pathway contain all symbols or just any one of the symbols(default is `FALSE`).
+#' @param all should the pathway contain all symbols or just any one of the symbols(default is `FALSE`)
 #' @import data.table
 #' @export
 query <- function(

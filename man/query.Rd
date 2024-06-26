@@ -21,7 +21,7 @@ query(
 
 \item{.unlist}{whether to unlist the symbols column.}
 
-\item{all}{should the pathway contain all symbols or just any one of the symbols(default is \code{FALSE}).}
+\item{all}{should the pathway contain all symbols or just any one of the symbols(default is \code{FALSE})}
 }
 \description{
 Query for MsigDB.
