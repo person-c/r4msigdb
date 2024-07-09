@@ -81,24 +81,14 @@ query(species = 'Hs', .unlist = TRUE) |> head()
 ```{r, eval=FALSE}
 library(fgsea)
 library(data.table)
-palette <- c("#440154FF", "#31688EFF", "#26828EFF", "#6DCD59FF", "#FDE725FF")
-
 data(exampleRanks)
-pathway <-  query(species = 'Hs', pathway = 'OPTOSIS', .unlist = TRUE)
+pathway <-  query(species = 'Hs', pathway = 'OPTOSIS')
 pathway <- pathway[, .(standard_name, symbol)]
+
 # substitute names with random symbols
 set.seed(2024)
 names(exampleRanks) <- query(species = 'Hs', .unlist = TRUE)[, sample(unique(symbol), length(exampleRanks))]
 
-gseaR <- clusterProfiler::GSEA(rev(exampleRanks),
-  TERM2GENE = pathway, pvalueCutoff = 1, by = "fgsea", eps = 0
-)
-sortedgsea <- as.data.table(gseaR@result)[order(pvalue)]
-
-enrichplot::gseaplot2(gseaR, sortedgsea[["ID"]][1:5],
-  base_size = 10,
-  color = palette,
-  rel_heights = c(1.5, 0.3, 0.5),
-  pvalue_table = FALSE
-)
+pathway <- setNames(pathway$symbol, pathway$standard_name)
+tmp <- fgsea::fgsea(pathway, exampleRanks)
 ```
